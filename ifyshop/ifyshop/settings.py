@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'davinshop',
     'search_app',
+    'cart',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'ifyshop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'davinshop','templates/'), os.path.join(BASE_DIR, 'search_app', 'templates/'),],
+        'DIRS': [os.path.join(BASE_DIR, 'davinshop','templates/'), os.path.join(BASE_DIR, 'search_app', 'templates/'), os.path.join(BASE_DIR, 'cart', 'templates/'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

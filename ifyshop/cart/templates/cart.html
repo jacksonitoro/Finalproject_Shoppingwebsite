@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% block metadescription %}
+    This is the shopping cart, please review your items and proceed to place order.
+{% endblock %}
+{% block title %}
+    Cart - Davin shop
+{% endblock %}
+{% block title %}
+    {% if not cart_items %}
+        <div>
+            <div class="text-center">
+                <br>
+                <h1 class="text-center my_title">Your shopping cart is empty</h1>
+                <br>
+                <p class="text-center">Please click <a href="{% url 'davinshop:allProdCat' %}">here</a> to continue shopping.</p>
+            </div>
+        </div>
+    {% else %}
+        <div>
+            <div>
+                <br>
+                <h1 class="text-center my_title">Your shopping cart</h1>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
