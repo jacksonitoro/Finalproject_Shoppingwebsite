@@ -32,10 +32,18 @@ def allProdCat(request, c_slug=None):
 
 def ProdCatDetails(request, c_slug, product_slug):
     # print(c_slug,product_slug)
+    # category = get_object_or_404(Category, slug=c_slug)
+    # product = get_object_or_404(Product, slug=product_slug, category_id=category.id)
     try:
         product = Product.objects.filter(category=c_slug, slug=product_slug)
     except Exception as e:
         raise e
     return render(request,'davinshop/product.html', {'product':product})
+
+    # try:
+    #     product = Product.objects.filter(category=c_slug, slug=product_slug)
+    # except Exception as e:
+    #     raise e
+    # return render(request,'davinshop/product.html', {'product':product})
 
 
