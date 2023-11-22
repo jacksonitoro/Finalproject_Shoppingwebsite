@@ -31,9 +31,9 @@ def allProdCat(request, c_slug=None):
     return render(request,'davinshop/category.html',{'category':c_page,'products':products})
 
 # def ProdCatDetails(request, c_slug, product_slug):
-#     # print(c_slug,product_slug)
-#     # category = get_object_or_404(Category, slug=c_slug)
-#     # product = get_object_or_404(Product, slug=product_slug, category_id=category.id)
+#     #print(c_slug,product_slug)
+#     category = get_object_or_404(Category, slug=c_slug)
+#     product = get_object_or_404(Product, slug=product_slug, category_id=category.id)
 #     try:
 #         product = Product.objects.filter(category=c_slug, slug=product_slug)
 #     except Exception as e:
@@ -41,16 +41,18 @@ def allProdCat(request, c_slug=None):
 #     return render(request,'davinshop/product.html', {'product':product})
 
 def ProdCatDetails(request, c_slug, product_slug):
-    category = Category.objects.get(slug=c_slug)
-    products = Product.objects.get(slug=product_slug, category=category)
+    # category = Category.objects.get(slug=c_slug)
+    category = get_object_or_404(Category, slug=c_slug)
+    # products = Product.objects.get(slug=product_slug, category=category)
+    product = get_object_or_404(Product, slug =product_slug, category=category)
 #     # This also works with filter
 #     # products = Product.objects.filter(slug=product_slug, category=category_id)
 #     # But filter returns a list and you have to use products[0]
-    return render(request,'davinshop/product.html', {'product': products})
-    # try:
-    #     product = Product.objects.filter(category=c_slug, slug=product_slug)
-    # except Exception as e:
-    #     raise e
-    # return render(request,'davinshop/product.html', {'product':product})
+    return render(request,'davinshop/product.html', {'product': product})
+# #     try:
+# #         product = Product.objects.filter(category=c_slug, slug=product_slug)
+# #     except Exception as e:
+# #         raise e
+# #     return render(request,'davinshop/product.html', {'product':product})
 
 
