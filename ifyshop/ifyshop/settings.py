@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'davinshop',
     'search_app',
     'cart',
+    'order',
 ]
 
 MIDDLEWARE = [

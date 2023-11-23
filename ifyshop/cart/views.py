@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from davinshop.models import Product
 from . models import Cart, CartItem
 from django.core.exceptions import ObjectDoesNotExist
+from order.models import Order, OrderItem
 
 # Create your views here.
 def _cart_id(request):
@@ -34,16 +35,52 @@ def add_cart(request, product_id):
         cart_item.save()
     return redirect('cart:cart_detail')
 
-def cart_detail(request, total=0, counter=0, cart_items=None):
+def cart_detail(request): #total=0, counter=0, cart_items=None):
     try:
         cart = Cart.objects.get(cart_id=_cart_id(request))
         cart_items = CartItem.objects.filter(cart=cart, active=True)
-        for cart_item in cart_items:
-            total += (cart_item.product.price * cart_item.quantity)
-            counter += cart_item.quantity
+        total = sum(cart_item.product.price * cart_item.quantity for cart_item in cart_items)
+        counter = sum(cart_item.quantity for cart_item in cart_items)
     except ObjectDoesNotExist:
-        pass
+        cart_items = []
+        total = 0
+        counter = 0
+
+
+    #     for cart_item in cart_items:
+    #         total += (cart_item.product.price * cart_item.quantity)
+    #         counter += cart_item.quantity
+    # except ObjectDoesNotExist:
+    #     pass
     return render(request, 'cart.html', dict(cart_items=cart_items, total=total, counter=counter))
+
+def checkout(request):
+    try:
+        cart = Cart.objects.get(cart_id=_cart_id(request))
+        cart_items = CartItem.objects.filter(cart=cart, active=True)
+        total = sum(cart_item.product.price * cart_item.quantity for cart_item in cart_items)
+
+        #creating order
+        order = Order.objects.create(
+            total = total,
+            emailAddress=request.user.email,
+        )
+
+        #create order items
+        for cart_item in cart_items:
+            OrderItem.objects.create(
+                product = cart_item.product.name,
+                quantity = cart_item.quantity,
+                price = cart_item.product.price,
+                order = order
+            )
+
+        #Clear the cart after creating the order
+        cart_items.delete()
+
+        return render(request, 'orders/order_detail.html', {'order': order})
+    except ObjectDoesNotExist:
+        return redirect('cart:cart_detail')
 
 
 def cart_remove(request, product_id):
