@@ -1,0 +1,81 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+
+    <div class="dropdown show">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Menu
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" href="{% url 'davinshop:allProdCat' %}">All Products</a>
+          {% for cat in links %}
+            <hr class="dropdown-divider">
+            <a class="dropdown-item" href="{{cat.get_url}}">{{cat.name}}</a>
+          {% endfor %}
+          <!-- <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a> -->
+        </div>
+    </div>
+    <form class="d-flex" role="search" action="{% url 'search_app:searchResult' %}" method="get">
+      {% csrf_token %}
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q">
+      <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </form>
+  <div>
+    {% if item_count > 0 %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'cart:cart_detail' %}"><i class="fa-solid fa-cart-shopping"></i>({{item_count}})</a>
+    </li>
+    {% endif %} 
+  </div>
+</div>
+</nav>
+
+
+
+<!-- <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown {% if 'davinshop' in request.path %}active{% endif %}">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Davinshop
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'davinshop:allProdCat' %}">All Products</a></li>
+              {% for cat in links %}
+                <a class="dropdown-item" href="{{cat.get_url}}">{{cat.name}}</a>
+                <hr class="dropdown-divider">
+              {% endfor %}
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Your Cart()</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-secondary" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>  -->
+
+
+
+<!-- <nav>
+    <ul>
+        <li><a href="{% url 'davinshop:allProdCat' %}">All Products</a></li>
+        {% for cat in links %}
+            <li><a href="{{cat.get_url}}">{{cat.name}}</a></li>
+        {% endfor %}
+
+        <li>Your Cart()</li>
+    </ul>
+</nav><br> -->
